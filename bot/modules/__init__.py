@@ -1,0 +1,17 @@
+import modules.admin_management
+import modules.chat_management
+import modules.chgk
+import modules.ddoses
+import modules.events
+import modules.for_fun
+import modules.friends_management
+import modules.games
+import modules.helps
+import modules.minecraft
+import modules.narfu
+import modules.personal
+import modules.service
+import modules.smalltalks
+import modules.support
+import modules.tiktok
+import modules.tools
