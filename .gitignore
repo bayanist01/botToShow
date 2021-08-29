@@ -4,8 +4,5 @@ __pycache__
 !bot/assets/.gitkeep
 !bot/logs/.gitkeep
 !bot/db/.gitkeep
-bot/logs/
-bot/db/
-bot/assets/
 .env
 bot.py
