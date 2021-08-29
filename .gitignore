@@ -1,11 +1,11 @@
 venv
 .idea
 __pycache__
-bot/logs
-bot/db
-bot/assets
 !bot/assets/.gitkeep
 !bot/logs/.gitkeep
 !bot/db/.gitkeep
+bot/logs/
+bot/db/
+bot/assets/
 .env
 bot.py
