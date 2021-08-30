@@ -67,15 +67,16 @@ class Raspisanie:
                 result = []
 
                 for clas in classes:
-                    result.append(dict(num_para=re.findall(r'<span class="num_para">([^♥]*?)</span>', clas)[0],
-                                       time_para=html.unescape(
-                                           re.findall(r'<span class="time_para">([^♥]*?)</span>', clas)[0].strip()),
-                                       kind_of_work=re.findall(r'<span class="kindOfWork">([^♥]*?)</span>', clas)[0],
-                                       discipline=re.findall(r'<span class="discipline">([^♥]*?)</span>', clas)[0],
-                                       lecturer=re.findall(r'<span class="lecturer">([^♥]*?)</span>', clas),
-                                       auditorium=html.unescape(re.findall(r'<b>([^♥]*?)</b>', clas)[0].strip()),
-                                       group=re.findall(r'<span class="group">([^♥]*?)</span>', clas)
-                                       ))
+                    result.append(dict(
+                        num_para=re.findall(r'<span class="num_para">([^♥]*?)</span>', clas)[0],
+                        time_para=html.unescape(
+                            re.findall(r'<span class="time_para">([^♥]*?)</span>', clas)[0].strip()),
+                        kind_of_work=re.findall(r'<span class="kindOfWork">([^♥]*?)</span>', clas)[0],
+                        discipline=re.findall(r'<span class="discipline">([^♥]*?)</span>', clas)[0],
+                        lecturer=re.findall(r'<span class="lecturer">([^♥]*?)</span>', clas),
+                        auditorium=html.unescape(re.findall(r'<b>([^♥]*?)</b>', clas)[0].strip()),
+                        group=re.findall(r'<span class="group">([^♥]*?)</span>', clas)
+                    ))
 
                 # 📗📘📙📕
                 emoji = {'Практические занятия': '📙', 'Лабораторные занятия': '📘', 'Лекции': '📗', 'empty': '📕'}

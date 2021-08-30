@@ -126,20 +126,20 @@ class Weather:
             r = requests.get('http://wttr.in/' + city + '?format=j1&lang=ru&m')
             r = json.loads(r.text)
             config.logger.debug(r)
-
+            current_condition = r['current_condition'][0]
             ans = 'Сейчас в ' + city.replace('+', ' ').capitalize() + ':\n'
-            C = r['current_condition'][0]['lang_ru'][0]['value']
-            t = r['current_condition'][0]['temp_C']
-            f = r['current_condition'][0]['FeelsLikeC']
-            w = r['current_condition'][0]['windspeedKmph'] + ' ' + r['current_condition'][0]['winddir16Point'].replace(
-                'N', 'С').replace('S', 'Ю').replace('W', 'З').replace('E', 'В')
-            p = r['current_condition'][0]['precipMM']
-            h = r['current_condition'][0]['humidity']
+            C = current_condition['lang_ru'][0]['value']
+            t = current_condition['temp_C']
+            f = current_condition['FeelsLikeC']
+            w = f"{current_condition['windspeedKmph']} {current_condition['winddir16Point']}"
+            w = w.replace('N', 'С').replace('S', 'Ю').replace('W', 'З').replace('E', 'В')
+            p = current_condition['precipMM']
+            h = current_condition['humidity']
 
             ans += f'{C}\nТемпература:{t}, Ощущается как:{f}\nВетер:{w}\nОсадки:{p}\nВлажность:{h}\n'
 
             for i in ([r['weather']['завтра' in msg]]):
-                ans += '======' + i['date'] + "\n"
+                ans += f'======{i["date"]}\n'
                 for x in i['hourly']:
                     ans += '=== В ' + str(int(int(x['time']) / 100)) + ' часов будет:\n'
                     C = x['lang_ru'][0]['value']

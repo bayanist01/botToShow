@@ -47,6 +47,26 @@ class SetEvent:
             bf.sendmessage(vk, peer_id=message.peer_id, answer=answer, mesfromuser=message)
 
 
+def get_list_of_participants(answer, user_event, vk):
+    answer += f'Событие \'{user_event["name"]}\':\n'
+    if user_event['go']:
+        answer += 'Идут:\n'
+        for x in user_event['go']:
+            answer += f' + [id{x}|{vk.users.get(user_ids=x)[0].get("first_name")}] \n'
+
+    if user_event['maybego']:
+        answer += 'Возможно идут:\n'
+        for x in user_event['maybego']:
+            answer += f' ~ [id{x}|{vk.users.get(user_ids=x)[0].get("first_name")}] \n'
+
+    if user_event['dontgo']:
+        answer += 'Не идут:\n'
+        for x in user_event['dontgo']:
+            answer += f' - [id{x}|{vk.users.get(user_ids=x)[0].get("first_name")}] \n'
+
+    return answer
+
+
 @bf.register(Funclist.standartfunclist)
 @bf.addtrigger(bf.standart_trigger)
 class ShowEvent:
@@ -70,21 +90,7 @@ class ShowEvent:
                 # user_event = {'name': msg, 'go': [], 'maybego': [], 'dontgo': []}
                 user_event = json.loads(database.ForAllDataBase.getbyunique(message.peer_id, 'event'))
 
-                answer = f'Событие \'{user_event["name"]}\':\n'
-                if user_event['go']:
-                    answer += 'Идут:\n'
-                    for x in user_event['go']:
-                        answer += f' + [id{x}|{vk.users.get(user_ids=x)[0].get("first_name")}] \n'
-
-                if user_event['maybego']:
-                    answer += 'Возможно идут:\n'
-                    for x in user_event['maybego']:
-                        answer += f' ~ [id{x}|{vk.users.get(user_ids=x)[0].get("first_name")}] \n'
-
-                if user_event['dontgo']:
-                    answer += 'Не идут:\n'
-                    for x in user_event['dontgo']:
-                        answer += f' - [id{x}|{vk.users.get(user_ids=x)[0].get("first_name")}] \n'
+                answer = get_list_of_participants(answer, user_event, vk)
 
                 if answer == f'Событие \'{user_event["name"]}\':\n':
                     answer += 'На это событие пока ещё никто не отметился. Можешь стать первым! '
@@ -137,22 +143,8 @@ class MarkInEvent:
                     answer = 'Отметил тебя как "идёт"'
 
                 database.ForAllDataBase.update(message.peer_id, 'event', json.dumps(user_event))
-                answer += f'\nСобытие \'{user_event["name"]}\':\n'
 
-                if user_event['go']:
-                    answer += 'Идут:\n'
-                    for x in user_event['go']:
-                        answer += f' + [id{x}|{vk.users.get(user_ids=x)[0].get("first_name")}] \n'
-
-                if user_event['maybego']:
-                    answer += 'Возможно идут:\n'
-                    for x in user_event['maybego']:
-                        answer += f' ~ [id{x}|{vk.users.get(user_ids=x)[0].get("first_name")}] \n'
-
-                if user_event['dontgo']:
-                    answer += 'Не идут:\n'
-                    for x in user_event['dontgo']:
-                        answer += f' - [id{x}|{vk.users.get(user_ids=x)[0].get("first_name")}] \n'
+                answer = get_list_of_participants(answer, user_event, vk)
 
         if answer:
             bf.sendmessage(vk, peer_id=message.peer_id, answer=answer, mesfromuser=message, disable_mentions=1)
