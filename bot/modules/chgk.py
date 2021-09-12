@@ -92,7 +92,7 @@ class ChgkQuestion:
         for i, x in enumerate(answers, 1):
             buttonrow[0]['action']['label'] = f'Показать ответ. Часть №{i}'
             payload['ans'] = x
-            buttonrow[0]['action']['payload'] = json.dumps(payload)
+            buttonrow[0]['action']['payload'] = json.dumps(payload, ensure_ascii=False)
 
             keyboard['buttons'].append(buttonrow.copy())
 
