@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import copy
 import html
 import json
 import re
@@ -94,6 +94,6 @@ class ChgkQuestion:
             payload['ans'] = x
             buttonrow[0]['action']['payload'] = json.dumps(payload, ensure_ascii=False)
 
-            keyboard['buttons'].append(buttonrow.copy())
+            keyboard['buttons'].append(copy.deepcopy(buttonrow))
 
         bf.sendmessage(vk, peer_id=message.peer_id, answer=q, keyboard=keyboard)
